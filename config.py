@@ -87,10 +87,9 @@ DATA_DIR = BASE_DIR / "data"
 LOGS_DIR = BASE_DIR / "logs"
 CACHE_DIR = BASE_DIR / "cache"
 BACKUP_DIR = BASE_DIR / "backups"
-ANALYSIS_DIR = BASE_DIR / "analysis"
- 
+
 # Create directories if they don't exist
-for directory in [DATA_DIR, LOGS_DIR, CACHE_DIR, BACKUP_DIR, ANALYSIS_DIR]:
+for directory in [DATA_DIR, LOGS_DIR, CACHE_DIR, BACKUP_DIR]:
     directory.mkdir(exist_ok=True)
 
 # Database Configuration
