@@ -10,7 +10,10 @@ __status__ = "Production"
 import sqlite3
 from pathlib import Path
 
-db_path = Path("data/stocks_enhanced.db")
+# Configuration for historical data limits
+from config import DB_PATH
+
+db_path = Path(DB_PATH)
 if not db_path.exists():
     print("Database not found!")
     exit(1)

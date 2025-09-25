@@ -36,7 +36,10 @@ from blacklist import get_blacklist
 logger = setup_logger(__name__)
 
 # Configuration for historical data limits
-from config import MAX_WORKERS, MAX_YEARS_HISTORY, MAX_RETRIES_ON_LOCK, BASE_RETRY_DELAY, MAX_RETRY_DELAY
+from config import (
+	DB_PATH, MAX_WORKERS, 
+	MAX_YEARS_HISTORY, MAX_RETRIES_ON_LOCK, BASE_RETRY_DELAY, MAX_RETRY_DELAY
+)
 
 class ExponentialBackoff:
     """Exponential backoff retry handler with jitter"""

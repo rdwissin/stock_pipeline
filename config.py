@@ -93,7 +93,7 @@ for directory in [DATA_DIR, LOGS_DIR, CACHE_DIR, BACKUP_DIR]:
     directory.mkdir(exist_ok=True)
 
 # Database Configuration
-DB_PATH = DATA_DIR / "stocks_enhanced.db"
+DB_PATH = os.getenv("DB_PATH", DATA_DIR / "stocks_enhanced.db")
 BACKUP_DB_PATH = BACKUP_DIR / f"stocks_backup_{os.getenv('USER', 'user')}.db"
 
 # Logging Configuration

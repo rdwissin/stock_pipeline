@@ -12,9 +12,12 @@ import sqlite3
 from pathlib import Path
 from datetime import datetime, timedelta
 
+# Configuration for historical data limits
+from config import DB_PATH
+
 def verify_database():
     """Comprehensive database verification"""
-    db_path = Path('data/stocks_enhanced.db')
+    db_path = Path(DB_PATH)
     
     if not db_path.exists():
         print("❌ Database does not exist!")
