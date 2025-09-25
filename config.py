@@ -107,7 +107,7 @@ LOG_LEVELS = {
     "CRITICAL": 50  # Fatal - Pipeline stoppers
 }
 
-LOG_LEVEL = LOG_LEVELS.get(os.getenv("LOG_LEVEL", "INFO").upper(), 20)
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 ENABLE_PERFORMANCE_LOGGING = os.getenv("ENABLE_PERFORMANCE_LOGGING", "true").lower() == "true"
 LOG_TO_FILE = os.getenv("LOG_TO_FILE", "true").lower() == "true"
 LOG_TO_CONSOLE = os.getenv("LOG_TO_CONSOLE", "true").lower() == "true"

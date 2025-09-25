@@ -142,7 +142,7 @@ header() {
 
 get_system_info() {
     echo
-    header "${ROCKET} ENHANCED STOCK PIPELINE v1.4.0 - SYSTEM INFO"
+    header "${ROCKET} ENHANCED STOCK PIPELINE v1.5.1 - SYSTEM INFO"
     
     info "System: $SYSTEM $ARCH"
     info "CPU Cores: $CPU_CORES"
@@ -356,7 +356,7 @@ run_pipeline() {
     local start_time=$(date +%s)
     local pipeline_args=("$@")
     
-    info "Starting enhanced stock data pipeline v1.4.0..."
+    info "Starting enhanced stock data pipeline v1.5.1..."
     info "Arguments: ${pipeline_args[*]}"
     info "Press Ctrl-C to stop gracefully"
     echo
@@ -472,7 +472,7 @@ main() {
     mkdir -p "$SCRIPT_DIR/logs"
     
     # Initialize
-    log "Enhanced stock pipeline runner v1.4.0 started"
+    log "Enhanced stock pipeline runner v1.5.1 started"
     log_performance "Runner initialization"
     
     # System information
@@ -505,7 +505,7 @@ main() {
 # ===============================================================================
 
 show_help() {
-    echo -e "${WHITE}Enhanced Stock Data Pipeline Runner v1.4.0${NC}"
+    echo -e "${WHITE}Enhanced Stock Data Pipeline Runner v1.5.1${NC}"
     echo
     echo -e "${CYAN}USAGE:${NC}"
     echo "  $0 [OPTIONS]"

@@ -29,15 +29,14 @@ import math
 # Add the project directory to the path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from config import (
-    MAX_WORKERS, MAX_YEARS_HISTORY, MAX_RETRIES_ON_LOCK, BASE_RETRY_DELAY, MAX_RETRY_DELAY
-)
-
 from logger import setup_logger, PerformanceTimer, performance_monitor
 from storage import get_database
 from blacklist import get_blacklist
 
 logger = setup_logger(__name__)
+
+# Configuration for historical data limits
+from config import MAX_WORKERS, MAX_YEARS_HISTORY, MAX_RETRIES_ON_LOCK, BASE_RETRY_DELAY, MAX_RETRY_DELAY
 
 class ExponentialBackoff:
     """Exponential backoff retry handler with jitter"""

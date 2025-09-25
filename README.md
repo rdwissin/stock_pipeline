@@ -161,7 +161,7 @@ tail -f logs/cron.log     # crontab
 
 ```
 stock_pipeline/
-├── main.py                 # Main pipeline orchestrator (v1.4.0)
+├── main.py                 # Main pipeline orchestrator (v1.5.0)
 ├── fetcher.py             # Yahoo Finance data fetcher
 ├── storage.py             # Database operations (Python 3.13 compatible)
 ├── historical_fetcher.py  # Historical data collector
@@ -173,8 +173,8 @@ stock_pipeline/
 ├── config.py             # Configuration management
 ├── logger.py             # Enhanced logging system
 │
-├── run_pipeline.sh       # Main runner script (v1.4.0)
-├── install_cron.sh       # Scheduler installer (v1.5.1 - Fixed)
+├── run_pipeline.sh       # Main runner script (v1.5.1)
+├── install_cron.sh       # Scheduler installer (v1.5.1)
 ├── monitor_pipeline.sh   # Status monitoring
 ├── maintain_pipeline.sh  # Maintenance utilities
 ├── setup.sh             # Initial setup script

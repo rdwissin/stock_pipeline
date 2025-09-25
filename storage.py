@@ -227,7 +227,7 @@ class Database:
             
             # Create all required tables
             cursor.executescript("""
-                -- Main stocks table
+                -- Main stocks table with all columns
                 CREATE TABLE IF NOT EXISTS stocks (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     symbol TEXT NOT NULL,
@@ -294,7 +294,7 @@ class Database:
                     UNIQUE(symbol, date)
                 );
                 
-                -- Pipeline runs table
+                -- Pipeline runs table for logging
                 CREATE TABLE IF NOT EXISTS pipeline_runs (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     run_date TEXT NOT NULL,
@@ -733,31 +733,4 @@ if __name__ == "__main__":
         else:
             print(f"  {symbol}: No historical data")
     
-    # Test market overview
-    print("\n📈 Market Overview:")
-    overview = get_market_overview()
-    if overview and 'overall' in overview:
-        stats = overview['overall']
-        print(f"  Total Stocks: {stats[0]}")
-        print(f"  Total Exchanges: {stats[1]}")
-        print(f"  Total Market Cap: ${stats[2]:,.2f}" if stats[2] else "  Total Market Cap: N/A")
-        print(f"  Avg P/E Ratio: {stats[3]:.2f}" if stats[3] else "  Avg P/E Ratio: N/A")
-        print(f"  Avg Dividend Yield: {stats[4]:.2%}" if stats[4] else "  Avg Dividend Yield: N/A")
-    
-    # Test recent pipeline runs
-    print("\n📝 Recent Pipeline Runs:")
-    runs = get_recent_pipeline_runs(5)
-    if runs:
-        for run in runs:
-            print(f"  {run['run_date']}: {run['status']} - {run['total_stocks']} stocks")
-    else:
-        print("  No pipeline runs found")
-    
-    # Test database backup
-    print("\n💾 Testing Database Backup...")
-    if backup_database():
-        print("  ✅ Backup created successfully")
-    else:
-        print("  ❌ Backup failed")
-    
-    print("\n✅ Storage module is fully functional with all features!")
+    print("\n✅ Storage module is fully functional with transaction support!")

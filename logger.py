@@ -22,13 +22,6 @@ from config import (
     ENABLE_MEMORY_TRACKING, MAX_MEMORY_MB
 )
 
-def set_log_level(level):
-    """Set the logging level dynamically"""
-    import logging
-    logging.getLogger().setLevel(level)
-    for handler in logging.getLogger().handlers:
-        handler.setLevel(level)
-        
 # Add custom TRACE level
 logging.addLevelName(5, "TRACE")
 
