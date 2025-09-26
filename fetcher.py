@@ -4,7 +4,7 @@ Enhanced Yahoo Finance Fetcher with Thread-Safe Rate Limiting
 Fixed version with proper synchronization and error handling
 """
 
-__version__ = "1.5.0"
+__version__ = "1.5.1"
 __copyright__ = "Copyright 2025, Richard D. Wissinger"
 __author__ = "Richard D. Wissinger"
 __email__ = "rick.wissinger@gmail.com"
@@ -19,7 +19,6 @@ import random
 import csv
 import io
 import re
-import weakref
 import atexit
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional, Set, Tuple, Union
@@ -580,13 +579,13 @@ class YahooFinanceAPI:
     
     def __init__(self):
         self.session = self._create_session()
-        self.rate_limiter = _rate_limiter  # Use global singleton
+        self.rate_limiter = _rate_limiter
         self._symbol_cache = {}
         self._cache_lock = threading.RLock()
         self.use_yfinance = YFINANCE_AVAILABLE
         self.symbol_discoverer = ComprehensiveSymbolDiscovery()
         self.blacklist = get_blacklist()
-        self._active_requests = weakref.WeakSet()
+        self._active_requests = set()  # Use regular set instead
         logger.info(f"Blacklist initialized with {len(self.blacklist._blacklist_set)} symbols")
         
     def _create_session(self) -> requests.Session:
@@ -766,7 +765,7 @@ class YahooFinanceAPI:
             # Enhanced timeout handling
             try:
                 response = self.session.get(url, timeout=REQUEST_TIMEOUT)
-                self._active_requests.add(response)
+                self._active_requests.add(id(response))  # Store ID instead
             except requests.exceptions.Timeout:
                 logger.warning(f"Timeout fetching {symbol}")
                 self.blacklist.add_symbol(symbol, "Request timeout", "TIMEOUT")
