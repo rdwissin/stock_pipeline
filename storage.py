@@ -15,6 +15,7 @@ import sqlite3
 import os
 import threading
 import time
+import weakref
 import atexit
 from datetime import datetime, date, timedelta
 from typing import List, Dict, Any, Optional, Tuple, Union
@@ -65,22 +66,17 @@ class ConnectionInfo:
     def idle_time(self) -> float:
         """Get idle time in seconds"""
         return time.time() - self.last_used
-
+    
     def close(self):
         """Close the connection safely"""
         if not self.is_closed:
             try:
                 if self.transaction_depth > 0:
                     self.connection.rollback()
-                # Store the connection id before closing
-                conn_id = id(self.connection)
                 self.connection.close()
                 self.is_closed = True
-                # Return the conn_id so it can be removed from tracking
-                return conn_id
             except:
                 pass
-        return None
 
 # ===============================================================================
 # ENHANCED DATABASE CLASS
@@ -104,8 +100,8 @@ class EnhancedStockDatabase:
         # Register cleanup on exit
         atexit.register(self.shutdown)
         
-        # Use regular set for Python 3.13+ compatibility (sqlite3 connections no longer support weak refs)
-        self._active_connections = set()
+        # Use weak references to track active connections
+        self._active_connections = weakref.WeakSet()
 
     def _start_cleanup_thread(self):
         """Start background thread for connection cleanup"""
@@ -152,13 +148,11 @@ class EnhancedStockDatabase:
             for thread_id in to_remove:
                 try:
                     conn_info = self._connection_pool[thread_id]
-                    conn_id = conn_info.close()  # Get the connection id when closing
-                    if conn_id and conn_id in self._active_connections:
-                        self._active_connections.discard(conn_id)  # Remove from tracking
+                    conn_info.close()
                     del self._connection_pool[thread_id]
                 except Exception as e:
                     logger.warning(f"Error closing connection for thread {thread_id}: {e}")
-
+            
             if to_remove:
                 logger.info(f"Cleaned up {len(to_remove)} database connections")
 
@@ -166,13 +160,10 @@ class EnhancedStockDatabase:
         """Close all connections in the pool"""
         with self.lock:
             for thread_id, conn_info in self._connection_pool.items():
-                conn_id = conn_info.close()
-                if conn_id and conn_id in self._active_connections:
-                    self._active_connections.discard(conn_id)
+                conn_info.close()
             self._connection_pool.clear()
-            self._active_connections.clear()  # Clear the tracking set
             logger.info("Closed all database connections")
-
+    
     def shutdown(self):
         """Shutdown database manager and cleanup resources"""
         logger.debug("Shutting down database manager")
@@ -209,9 +200,7 @@ class EnhancedStockDatabase:
                     # Create connection info
                     conn_info = ConnectionInfo(conn)
                     self._connection_pool[thread_id] = conn_info
-
-                    # Track connection without weak reference
-                    self._active_connections.add(id(conn))  # Store connection id instead of connection itself
+                    self._active_connections.add(conn)
                     
                     logger.trace(f"Created new connection for thread {thread_id}")
                 else:
