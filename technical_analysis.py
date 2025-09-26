@@ -722,7 +722,7 @@ class StrategyWatchlistAnalyzer:
         self.notifier = get_email_notifier()
         self.results = []
         self.strategy_matches = []
-        self.output_dir = Path(os.getenv('ANALYSIS_OUTPUT_DIR', 'analysis_reports'))
+        self.output_dir = Path(os.getenv('ANALYSIS_OUTPUT_DIR', 'analysis/reports'))
         self.output_dir.mkdir(parents=True, exist_ok=True)
         
     @performance_monitor("analyze_watchlist_with_strategies")

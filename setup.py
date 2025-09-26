@@ -368,9 +368,9 @@ HANDLE_END_BAND=0.05
 
 # Analysis Output
 ANALYSIS_OUTPUT_FORMATS=csv,excel,json
-ANALYSIS_OUTPUT_DIR=analysis_reports
+ANALYSIS_OUTPUT_DIR=analysis/reports
 ANALYSIS_CHART_MATCHES=true
-ANALYSIS_CHART_DIR=analysis_charts
+ANALYSIS_CHART_DIR=analysis/charts
 
 # Analysis Ticker Lists
 ANALYSIS_WATCHLIST=data/watchlists/watchlist.txt
@@ -441,9 +441,9 @@ HANDLE_END_BAND=0.05
 
 # Analysis Output
 ANALYSIS_OUTPUT_FORMATS=csv,excel,json
-ANALYSIS_OUTPUT_DIR=analysis_reports
+ANALYSIS_OUTPUT_DIR=analysis/reports
 ANALYSIS_CHART_MATCHES=true
-ANALYSIS_CHART_DIR=analysis_charts
+ANALYSIS_CHART_DIR=analysis/charts
 """
             with open(env_file, 'a') as f:
                 f.write(technical_config)
@@ -489,8 +489,8 @@ ANALYSIS_CHART_DIR=analysis_charts
             'cache', 
             'backups',
             'data/watchlists',  # For watchlists
-            'analysis_reports',  # For technical analysis reports
-            'analysis_charts',  # For pattern charts
+            'analysis/reports',  # For technical analysis reports
+            'analysis/charts',  # For pattern charts
             'reports',  # For general reports
             'charts'  # For general charts
         ]
